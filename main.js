@@ -132,7 +132,6 @@ adapter.on('message', function (obj) {
                 break;
         }
     }
-    processMessages();
 });
 
 function httpGet(options, callback, userArg) {
@@ -153,15 +152,6 @@ function httpGet(options, callback, userArg) {
         });
     }).on('error', function (err) {
         callback && callback(err, null, userArg);
-    });
-}
-
-function processMessages(ignore) {
-    adapter.getMessage(function (err, obj) {
-        if (obj) {
-            if (!ignore && obj && obj.command === 'send') processMessage(obj.message);
-            processMessages();
-        }
     });
 }
 
@@ -3731,5 +3721,4 @@ function main() {
     }
     syncObjects();
     adapter.subscribeStates('*');
-    processMessages(true);
 }
